@@ -23,13 +23,10 @@ const PORT = 7075;
 
 config.init().then(()=>{
 	db.init().then(()=>{
-		console.log('DB connected');
+		console.log('Database is Connected');
 		app.listen(PORT, ()=>{
 			routes.init(app);
 			console.log(`Listening at port ${PORT}!`);
-
-			// Uncomment following to setup data
-			//setupData.start();
 		});
 	});
 });
