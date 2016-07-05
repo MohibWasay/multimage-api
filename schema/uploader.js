@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var _ = require('lodash');
 
 var Schema = mongoose.Schema,
 		ObjectId = Schema.ObjectId;
@@ -6,15 +7,23 @@ var Schema = mongoose.Schema,
 var Uploader = new Schema({
 	id: String,
 	name: String,
-	imageBinary: Buffer
+	imageBinary: String
 });
 
 Uploader.pre('save', (next)=>{
 	next();
 });
 
-Uploader.methods.add = function(imageFileName) {
+Uploader.methods.upload = function(files) {
 	return new Promise((resolve,reject)=>{
+		_.each(files, (file)=>{
+			file.save((err, user)=>{
+            if(err){
+            	reject(err);	
+            }
+        });		
+        resolve(user);
+		})        		
 	});
 };
 
